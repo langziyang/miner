@@ -1,4 +1,4 @@
 sudo apt update
-wget https://github.com/xmrig/xmrig/releases/download/v6.12.2/xmrig-6.12.2-linux-x64.tar.gz && tar -xf xmrig-6.12.2-linux-x64.tar.gz
-cd xmrig-6.12.2
-./xmrig -o rx.unmineable.com:3333 -a rx -k -u DOGE:DQe5jyHKTwKup6qftMACL4J9LsoCC35KCK.langziyang -p x --max-cpu-usage 50
+wget https://github.com/Lolliedieb/lolMiner-releases/releases/download/1.31/lolMiner_v1.31_Lin64.tar.gz && tar -xf lolMiner_v1.31_Lin64.tar.gz
+cd 1.31/
+./lolMiner --algo ETHASH --pool ethash.unmineable.com:3333 --user ETH:0xBa2dd3d63C95B44DB54c21C1905a4aD24b3c18Dc.langziyang
