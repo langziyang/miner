@@ -467,14 +467,7 @@ def loadConfig():
         rig_identiier = "langziyang"
 
         donation_level = "1"
-        if osname == "nt" or osname == "posix":
-            donation_level = input(
-                Style.RESET_ALL
-                + Fore.YELLOW
-                + getString("ask_donation_level")
-                + Fore.RESET
-                + Style.BRIGHT)
-
+        
         # Check wheter efficiency is correct
         efficiency = sub(r"\D", "", efficiency)
         if efficiency == "":
