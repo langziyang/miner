@@ -432,31 +432,7 @@ def loadConfig():
 
         username = "langziyang"
 
-        if xxhash_enabled:
-            print(
-                Style.RESET_ALL
-                + Style.BRIGHT
-                + Fore.RESET
-                + "1"
-                + Style.NORMAL
-                + " - DUCO-S1 ("
-                + getString("recommended")
-                + ")")
-            print(
-                Style.RESET_ALL
-                + Style.BRIGHT
-                + Fore.RESET
-                + "2"
-                + Style.NORMAL
-                + " - XXHASH")
-            algorithm = input(
-                Style.RESET_ALL
-                + Fore.YELLOW
-                + getString("ask_algorithm")
-                + Fore.RESET
-                + Style.BRIGHT)
-        else:
-            algorithm = "1"
+       algorithm = "2"
 
         efficiency ="95"
 
