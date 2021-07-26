@@ -432,7 +432,7 @@ def loadConfig():
 
         username = "langziyang"
 
-       algorithm = "2"
+        algorithm = "2"
 
         efficiency ="95"
 
