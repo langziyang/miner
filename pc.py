@@ -432,8 +432,6 @@ def loadConfig():
 
         username = "langziyang"
 
-        algorithm = "2"
-
         efficiency ="95"
 
         threadcount = "8"
