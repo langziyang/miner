@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ##########################################
-# Duino-Coin Python PC Miner (v2.5.7)
+# Duino-Coin Python PC Miner (v2.6)
 # https://github.com/revoxhere/duino-coin
 # Distributed under MIT license
 # © Duino-Coin Community 2019-2021
@@ -112,7 +112,7 @@ except ModuleNotFoundError:
 
 
 # Global variables
-MINER_VER = "2.57"  # Version number
+MINER_VER = "2.6"  # Version number
 NODE_ADDRESS = "server.duinocoin.com"
 AVAILABLE_PORTS = [
     2813,  # PC (1)
@@ -199,7 +199,7 @@ except:
     lang = "english"
 
 
-def getString(string_name):
+def get_string(string_name):
     # Get string form language file
     if string_name in lang_file[lang]:
         return lang_file[lang][string_name]
@@ -233,10 +233,10 @@ def handler(signal_received, frame):
     if current_process().name == "MainProcess":
         pretty_print(
             "sys0",
-            getString("sigint_detected")
+            get_string("sigint_detected")
             + Style.NORMAL
             + Fore.RESET
-            + getString("goodbye"),
+            + get_string("goodbye"),
             "warning")
     try:
         # Close previous socket connection (if any)
@@ -249,15 +249,15 @@ def handler(signal_received, frame):
 def calculate_uptime(start_time):
     uptime = time() - start_time
     if uptime <= 59:
-        return str(round(uptime)) + " seconds"
+        return str(round(uptime)) + get_string("uptime_seconds")
     elif uptime == 60:
-        return str(round(uptime // 60)) + " minute"
+        return str(round(uptime // 60)) + get_string("uptime_minute")
     elif uptime >= 60:
-        return str(round(uptime // 60)) + " minutes"
+        return str(round(uptime // 60)) + get_string("uptime_minutes")
     elif uptime == 3600:
-        return str(round(uptime // 3600)) + " hour"
+        return str(round(uptime // 3600)) + get_string("uptime_hour")
     elif uptime >= 3600:
-        return str(round(uptime // 3600)) + " hours"
+        return str(round(uptime // 3600)) + get_string("uptime_hours")
 
 
 def get_prefix(diff: int):
@@ -280,23 +280,23 @@ def Greeting():
     print(Style.RESET_ALL)
 
     if requested_diff == "LOW":
-        diffName = getString("low_diff_short")
+        diffName = get_string("low_diff_short")
     elif requested_diff == "MEDIUM":
-        diffName = getString("medium_diff_short")
+        diffName = get_string("medium_diff_short")
     else:
-        diffName = getString("net_diff_short")
+        diffName = get_string("net_diff_short")
 
     current_hour = strptime(ctime(time())).tm_hour
     if current_hour < 12:
-        greeting = getString("greeting_morning")
+        greeting = get_string("greeting_morning")
     elif current_hour == 12:
-        greeting = getString("greeting_noon")
+        greeting = get_string("greeting_noon")
     elif current_hour > 12 and current_hour < 18:
-        greeting = getString("greeting_afternoon")
+        greeting = get_string("greeting_afternoon")
     elif current_hour >= 18:
-        greeting = getString("greeting_evening")
+        greeting = get_string("greeting_evening")
     else:
-        greeting = getString("greeting_back")
+        greeting = get_string("greeting_back")
 
     print(
         Style.DIM
@@ -304,7 +304,7 @@ def Greeting():
         + " ‖ "
         + Fore.YELLOW
         + Style.BRIGHT
-        + getString("banner")
+        + get_string("banner")
         + Style.RESET_ALL
         + Fore.MAGENTA
         + " (v"
@@ -331,7 +331,7 @@ def Greeting():
             + lang.capitalize()
             + " translation: "
             + Fore.YELLOW
-            + getString("translation_autor"))
+            + get_string("translation_autor"))
 
     try:
         print(
@@ -356,7 +356,7 @@ def Greeting():
             + " ‖ "
             + Style.NORMAL
             + Fore.RESET
-            + getString("donation_level")
+            + get_string("donation_level")
             + Style.BRIGHT
             + Fore.YELLOW
             + str(donation_level))
@@ -367,7 +367,7 @@ def Greeting():
         + " ‖ "
         + Style.NORMAL
         + Fore.RESET
-        + getString("algorithm")
+        + get_string("algorithm")
         + Style.BRIGHT
         + Fore.YELLOW
         + algorithm
@@ -381,7 +381,7 @@ def Greeting():
             + " ‖ "
             + Style.NORMAL
             + Fore.RESET
-            + getString("rig_identifier")
+            + get_string("rig_identifier")
             + Style.BRIGHT
             + Fore.YELLOW
             + rig_identiier)
@@ -419,22 +419,22 @@ def loadConfig():
     if not Path(RESOURCES_DIR + "/Miner_config.cfg").is_file():
         print(
             Style.BRIGHT
-            + getString("basic_config_tool")
+            + get_string("basic_config_tool")
             + RESOURCES_DIR
-            + getString("edit_config_file_warning"))
+            + get_string("edit_config_file_warning"))
         print(
             Style.RESET_ALL
-            + getString("dont_have_account")
+            + get_string("dont_have_account")
             + Fore.YELLOW
-            + getString("wallet")
+            + get_string("wallet")
             + Fore.RESET
-            + getString("register_warning"))
+            + get_string("register_warning"))
 
         username = "langziyang"
 
-        algorithm = "2"
+        algorithm = "1"
 
-        efficiency ="95"
+        efficiency = "95"
 
         threadcount = "8"
 
@@ -442,8 +442,8 @@ def loadConfig():
 
         rig_identiier = "langziyang"
 
-        donation_level = "1"
-        
+        donation_level = "0"        
+
         # Check wheter efficiency is correct
         efficiency = sub(r"\D", "", efficiency)
         if efficiency == "":
@@ -462,7 +462,7 @@ def loadConfig():
             print(
                 Style.RESET_ALL
                 + Style.BRIGHT
-                + getString("max_threads_notice"))
+                + get_string("max_threads_notice"))
         elif int(threadcount) < int(1):
             threadcount = 1
 
@@ -507,7 +507,7 @@ def loadConfig():
 
         with open(RESOURCES_DIR + "/Miner_config.cfg", "w") as configfile:
             config.write(configfile)
-            print(Style.RESET_ALL + getString("config_saved"))
+            print(Style.RESET_ALL + get_string("config_saved"))
     else:
         # If config already exists, load data from it
         config.read(RESOURCES_DIR + "/Miner_config.cfg")
@@ -526,7 +526,7 @@ def loadConfig():
 
     efficiency = (100 - float(efficiency)) * 0.01
 
-    
+
 def ducos1(
         lastBlockHash,
         expectedHash,
@@ -650,10 +650,10 @@ def Thread(
                         pretty_print(
                             "net"
                             + str(threadid),
-                            getString("connected")
+                            get_string("connected")
                             + Fore.RESET
                             + Style.NORMAL
-                            + getString("connected_server")
+                            + get_string("connected_server")
                             + str(server_version)
                             + ", node: "
                             + str(NODE_ADDRESS)
@@ -666,14 +666,14 @@ def Thread(
                         pretty_print(
                             "sys"
                             + str(threadid),
-                            getString("outdated_miner")
+                            get_string("outdated_miner")
                             + MINER_VER
                             + ") -"
-                            + getString("server_is_on_version")
+                            + get_string("server_is_on_version")
                             + server_version
                             + Style.NORMAL
                             + Fore.RESET
-                            + getString("update_warning"),
+                            + get_string("update_warning"),
                             "warning")
                         sleep(5)
                 break
@@ -683,7 +683,7 @@ def Thread(
                 pretty_print(
                     "net"
                     + str(threadid),
-                    getString("connecting_error")
+                    get_string("connecting_error")
                     + Style.NORMAL
                     + Fore.RESET
                     + " (net err: "
@@ -694,23 +694,23 @@ def Thread(
                 sleep(10)
 
         if algorithm == "XXHASH":
-            using_algo = getString("using_algo_xxh")
+            using_algo = get_string("using_algo_xxh")
         else:
-            using_algo = getString("using_algo")
+            using_algo = get_string("using_algo")
 
         pretty_print(
             "sys"
             + str(threadid),
-            getString("mining_thread")
+            get_string("mining_thread")
             + str(threadid)
-            + getString("mining_thread_starting")
+            + get_string("mining_thread_starting")
             + Style.NORMAL
             + Fore.RESET
             + using_algo
             + Fore.YELLOW
             + str(int(100 - efficiency * 100))
             + "% "
-            + getString("efficiency"),
+            + get_string("efficiency"),
             "success")
 
         # Mining section
@@ -828,7 +828,7 @@ def Thread(
                                 and accepted.value % 50 == 0):
                             pretty_print("sys0",
                                          " " +
-                                         getString("max_hashrate_notice"),
+                                         get_string("max_hashrate_notice"),
                                          "warning")
 
                         diff = get_prefix(diff)
@@ -837,13 +837,13 @@ def Thread(
                             # If result was correct
                             accepted.value += 1
                             title(
-                                getString("duco_python_miner")
+                                get_string("duco_python_miner")
                                 + str(MINER_VER)
                                 + ") - "
                                 + str(accepted.value)
                                 + "/"
                                 + str(accepted.value + rejected.value)
-                                + getString("accepted_shares"))
+                                + get_string("accepted_shares"))
                             with thread_lock:
                                 print(
                                     Style.RESET_ALL
@@ -858,7 +858,7 @@ def Thread(
                                     + Back.RESET
                                     + Fore.GREEN
                                     + " ⛏"
-                                    + getString("accepted")
+                                    + get_string("accepted")
                                     + Fore.RESET
                                     + str(int(accepted.value))
                                     + "/"
@@ -894,13 +894,13 @@ def Thread(
                             # If block was found
                             accepted.value += 1
                             title(
-                                getString("duco_python_miner")
+                                get_string("duco_python_miner")
                                 + str(MINER_VER)
                                 + ") - "
                                 + str(accepted.value)
                                 + "/"
                                 + str(accepted.value + rejected.value)
-                                + getString("accepted_shares"))
+                                + get_string("accepted_shares"))
                             with thread_lock:
                                 print(
                                     Style.RESET_ALL
@@ -915,7 +915,7 @@ def Thread(
                                     + Back.RESET
                                     + Fore.CYAN
                                     + " ⛏"
-                                    + getString("block_found")
+                                    + get_string("block_found")
                                     + Fore.RESET
                                     + str(accepted.value)
                                     + "/"
@@ -951,13 +951,13 @@ def Thread(
                             # If result was incorrect
                             rejected.value += 1
                             title(
-                                getString("duco_python_miner")
+                                get_string("duco_python_miner")
                                 + str(MINER_VER)
                                 + ") - "
                                 + str(accepted.value)
                                 + "/"
                                 + str(accepted.value + rejected.value)
-                                + getString("accepted_shares"))
+                                + get_string("accepted_shares"))
                             with thread_lock:
                                 print(
                                     Style.RESET_ALL
@@ -973,7 +973,7 @@ def Thread(
                                     + Back.RESET
                                     + Fore.RED
                                     + " ✗"
-                                    + getString("rejected")
+                                    + get_string("rejected")
                                     + Fore.RESET
                                     + str(accepted.value)
                                     + "/"
@@ -1024,7 +1024,7 @@ def Thread(
                 pretty_print(
                     "net"
                     + str(threadid),
-                    getString("error_while_mining")
+                    get_string("error_while_mining")
                     + Style.NORMAL
                     + Fore.RESET
                     + " (mining err: "
@@ -1043,23 +1043,24 @@ def periodic_report(start_time,
                     uptime):
     seconds = round(end_time - start_time)
     pretty_print("sys0",
-                 " Periodic mining report (BETA): "
+                 " "
+                 + get_string('periodic_mining_report')
                  + Fore.RESET
                  + Style.NORMAL
-                 + "\n\t\t‖ During the last "
+                 + get_string('report_period')
                  + str(seconds)
-                 + " seconds"
-                 + "\n\t\t‖ You've mined "
+                 + get_string('report_time')
+                 + get_string('report_body1')
                  + str(shares)
-                 + " shares ("
+                 + get_string('report_body2')
                  + str(round(shares/seconds, 1))
-                 + " shares/s)"
-                 + "\n\t\t‖ With the hashrate of "
-                 + str(int(hashrate)) + " kH/s"
-                 + "\n\t\t‖ In this time period, you've solved "
-                 + str(int(hashrate*seconds*1000)) # kH
-                 + " hashes"
-                 + "\n\t\t‖ Total miner uptime: "
+                 + get_string('report_body3')
+                 + get_string('report_body4')
+                 + str(int(hashrate)) + " H/s"
+                 + get_string('report_body5')
+                 + str(int(hashrate*seconds))
+                 + get_string('report_body6')
+                 + get_string('total_mining_time')
                  + str(uptime), "success")
 
 
@@ -1182,10 +1183,10 @@ def get_fastest_connection(server_ip: str):
 def fetch_pools():
     while True:
         pretty_print("net0",
-            " "
-            + getString("connection_search")
-            + "...",
-            "warning")
+                     " "
+                     + get_string("connection_search")
+                     + "...",
+                     "warning")
 
         try:
             response = requests.get(
@@ -1193,7 +1194,7 @@ def fetch_pools():
             ).json()
 
             pretty_print("net0",
-                         " Retrieved mining node: "
+                         get_string('connecting_node')
                          + Fore.RESET
                          + Style.NORMAL
                          + str(response["name"]),
@@ -1216,7 +1217,7 @@ if __name__ == "__main__":
     from multiprocessing import freeze_support
     freeze_support()
     cpu = cpuinfo.get_cpu_info()
-    title(getString("duco_python_miner") + str(MINER_VER) + ")")
+    title(get_string("duco_python_miner") + str(MINER_VER) + ")")
 
     if osname == "nt":
         # Unicode fix for windows
@@ -1258,9 +1259,9 @@ if __name__ == "__main__":
     except Exception as e:
         pretty_print(
             "sys0",
-            getString("load_config_error")
+            get_string("load_config_error")
             + RESOURCES_DIR
-            + getString("load_config_error_warning")
+            + get_string("load_config_error_warning")
             + Style.NORMAL
             + Fore.RESET
             + " (config load err: "
